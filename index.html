@@ -6,6 +6,12 @@
     <title>TrendZmediaSolution</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your Public Key
+    emailjs.init("u4LzqrbupLO2huRE2"); // 🔴 Replace with your EmailJS Public Key
+</script>
     <style>
         * {
             margin: 0;
@@ -1716,6 +1722,17 @@
             nav { padding: 0 4%; }
             .section { padding: 50px 4%; }
         }
+        /* ===== UNSUBSCRIBE MODAL ANIMATION ===== */
+       @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+     }
+     to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
     </style>
 </head>
 <body>
@@ -1732,7 +1749,7 @@
         <span class="logo-text">TrendZ<span>media</span>Solutions</span>
     </a>
 
-    
+
     <ul class="nav-links">
         <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
         <li><a onclick="showPage('about')" id="nav-about">About Us</a></li>
@@ -2853,14 +2870,250 @@
         </div>
     </div>
 
-    <div class="footer-bottom">
-        <p>© 2024 TrendZmediaSolutions. All rights reserved.</p>
-        <div class="footer-bottom-links">
-            <a onclick="showPage('terms')">Terms & Policy</a>
-            <a onclick="showPage('privacy')">Privacy Policy</a>
-            <a onclick="showPage('contact')">Contact</a>
+    <!-- Unsubscribe Modal -->
+<div id="unsubscribeModal" style="
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.85);
+    z-index:99999;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(8px);
+    padding:20px;
+">
+    <div style="
+        background:#111111;
+        border:1px solid #333;
+        border-radius:24px;
+        padding:50px 45px;
+        max-width:480px;
+        width:100%;
+        position:relative;
+        box-shadow:0 30px 80px rgba(0,0,0,0.7);
+        animation: modalSlideIn 0.4s ease;
+    ">
+        <!-- Close Button -->
+        <button onclick="closeUnsubscribeModal()" style="
+            position:absolute;
+            top:18px;right:18px;
+            background:rgba(255,255,255,0.06);
+            border:1px solid #333;
+            color:#888;
+            width:36px;height:36px;
+            border-radius:50%;
+            cursor:pointer;
+            font-size:1rem;
+            display:flex;align-items:center;justify-content:center;
+            transition:all 0.3s;
+        " onmouseover="this.style.color='#fff';this.style.borderColor='#555'"
+           onmouseout="this.style.color='#888';this.style.borderColor='#333'">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Icon -->
+        <div style="
+            width:75px;height:75px;
+            background:rgba(230,57,70,0.12);
+            border:1px solid rgba(230,57,70,0.25);
+            border-radius:20px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.8rem;
+            color:#e63946;
+            margin-bottom:25px;
+        ">
+            <i class="fas fa-bell-slash"></i>
         </div>
+
+        <!-- Heading -->
+        <h2 style="
+            font-size:1.6rem;
+            font-weight:800;
+            margin-bottom:10px;
+            color:#fff;
+            line-height:1.2;
+        ">Unsubscribe from<br><span style="color:#e63946;">Newsletter</span></h2>
+
+        <p style="
+            color:#888;
+            font-size:0.88rem;
+            line-height:1.7;
+            margin-bottom:30px;
+        ">We're sorry to see you go! Enter your email address below and we'll remove you from our mailing list immediately.</p>
+
+        <!-- Unsubscribe Form -->
+        <form id="unsubscribeForm" onsubmit="submitUnsubscribe(event)">
+
+            <div style="margin-bottom:18px;">
+                <label style="
+                    display:block;
+                    font-size:0.8rem;
+                    font-weight:500;
+                    color:#bbb;
+                    margin-bottom:8px;
+                    letter-spacing:0.3px;
+                ">Your Email Address *</label>
+                <input
+                    id="unsubEmailInput"
+                    type="email"
+                    placeholder="enter your subscribed email"
+                    required
+                    style="
+                        width:100%;
+                        background:rgba(255,255,255,0.04);
+                        border:1px solid #2a2a2a;
+                        border-radius:10px;
+                        padding:13px 16px;
+                        color:#fff;
+                        font-size:0.88rem;
+                        font-family:'Poppins',sans-serif;
+                        outline:none;
+                        transition:all 0.3s;
+                    "
+                    onfocus="this.style.borderColor='#e63946';this.style.boxShadow='0 0 0 3px rgba(230,57,70,0.1)'"
+                    onblur="this.style.borderColor='#2a2a2a';this.style.boxShadow='none'"
+                >
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <label style="
+                    display:block;
+                    font-size:0.8rem;
+                    font-weight:500;
+                    color:#bbb;
+                    margin-bottom:8px;
+                ">Reason for Unsubscribing (Optional)</label>
+                <select id="unsubReason" style="
+                    width:100%;
+                    background:#1a1a1a;
+                    border:1px solid #2a2a2a;
+                    border-radius:10px;
+                    padding:13px 16px;
+                    color:#aaa;
+                    font-size:0.85rem;
+                    font-family:'Poppins',sans-serif;
+                    outline:none;
+                    cursor:pointer;
+                    transition:all 0.3s;
+                "
+                onfocus="this.style.borderColor='#e63946'"
+                onblur="this.style.borderColor='#2a2a2a'">
+                    <option value="" disabled selected>Select a reason...</option>
+                    <option value="too_many">Too many emails</option>
+                    <option value="not_relevant">Content not relevant to me</option>
+                    <option value="never_subscribed">I never subscribed</option>
+                    <option value="not_interested">No longer interested</option>
+                    <option value="other">Other reason</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display:flex;gap:12px;">
+                <button type="button" onclick="closeUnsubscribeModal()" style="
+                    flex:1;
+                    background:rgba(255,255,255,0.05);
+                    color:#aaa;
+                    border:1px solid #2a2a2a;
+                    border-radius:10px;
+                    padding:13px;
+                    font-size:0.85rem;
+                    font-weight:600;
+                    cursor:pointer;
+                    font-family:'Poppins',sans-serif;
+                    transition:all 0.3s;
+                "
+                onmouseover="this.style.background='rgba(255,255,255,0.09)';this.style.color='#fff'"
+                onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#aaa'">
+                    Cancel
+                </button>
+                <button type="submit" id="unsubBtn" style="
+                    flex:2;
+                    background:linear-gradient(135deg,#e63946,#c1121f);
+                    color:#fff;
+                    border:none;
+                    border-radius:10px;
+                    padding:13px;
+                    font-size:0.85rem;
+                    font-weight:600;
+                    cursor:pointer;
+                    font-family:'Poppins',sans-serif;
+                    transition:all 0.3s;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
+                "
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(230,57,70,0.4)'"
+                onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <i class="fas fa-bell-slash"></i> Unsubscribe Me
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Success State (hidden by default) -->
+        <div id="unsubSuccessState" style="display:none;text-align:center;padding:20px 0;">
+            <div style="
+                width:80px;height:80px;
+                background:rgba(40,167,69,0.15);
+                border:1px solid rgba(40,167,69,0.3);
+                border-radius:50%;
+                display:flex;align-items:center;justify-content:center;
+                font-size:2rem;color:#28a745;
+                margin:0 auto 20px;
+            ">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;color:#fff;">
+                Successfully Unsubscribed!
+            </h3>
+            <p style="color:#888;font-size:0.85rem;line-height:1.6;margin-bottom:25px;">
+                You've been removed from our newsletter list. <br>
+                We're sorry to see you go. You can always resubscribe anytime.
+            </p>
+            <button onclick="closeUnsubscribeModal()" style="
+                background:linear-gradient(135deg,#28a745,#1e7e34);
+                color:#fff;
+                border:none;
+                border-radius:10px;
+                padding:12px 30px;
+                font-size:0.85rem;
+                font-weight:600;
+                cursor:pointer;
+                font-family:'Poppins',sans-serif;
+            ">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+
+        <!-- Error Message -->
+        <div id="unsubErrorMsg" style="
+            display:none;
+            background:rgba(220,53,69,0.12);
+            border:1px solid rgba(220,53,69,0.3);
+            color:#dc3545;
+            padding:12px 16px;
+            border-radius:10px;
+            font-size:0.82rem;
+            margin-top:15px;
+            text-align:center;
+        "></div>
     </div>
+</div>
+
+<!-- ============ FOOTER BOTTOM (UPDATED) ============ -->
+<div class="footer-bottom">
+    <p>© 2024 TrendZmediaSolution. All rights reserved.</p>
+    <div class="footer-bottom-links">
+        <a onclick="showPage('terms')">Terms & Policy</a>
+        <a onclick="showPage('privacy')">Privacy Policy</a>
+        <a onclick="showPage('contact')">Contact</a>
+        <!-- ✅ UNSUBSCRIBE LINK ADDED HERE -->
+        <a onclick="openUnsubscribeModal()" style="color:#e63946 !important;">
+            <i class="fas fa-bell-slash" style="margin-right:4px;font-size:0.75rem;"></i>Unsubscribe
+        </a>
+    </div>
+</div>
 </footer>
 
 <!-- Scroll to Top -->
@@ -2940,38 +3193,236 @@
             : 'Read Less <i class="fas fa-arrow-up"></i>';
     }
 
-    // ===== CONTACT FORM =====
-    function submitForm(e) {
-        e.preventDefault();
-        const btn = document.querySelector('.form-submit');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        btn.disabled = true;
+// ===== CONTACT FORM - REAL EMAIL DELIVERY =====
+function submitForm(e) {
+    e.preventDefault();
+
+    const btn = document.querySelector('.form-submit');
+    const successMsg = document.getElementById('successMsg');
+    const form = document.getElementById('contactForm');
+
+    // Get all form values
+    const firstName = form.querySelector('input[placeholder="Your first name"]').value.trim();
+    const lastName = form.querySelector('input[placeholder="Your last name"]').value.trim();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const phone = form.querySelector('input[type="tel"]').value.trim();
+    const company = form.querySelector('input[placeholder="Your company name"]').value.trim();
+    const service = form.querySelectorAll('select')[0].value;
+    const budget = form.querySelectorAll('select')[1].value;
+    const message = form.querySelector('textarea').value.trim();
+
+    // Show loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.8';
+
+    // EmailJS Template Parameters - these match your email template variables
+    const templateParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // 🔴 Your Gmail (already set)
+        from_name: firstName + ' ' + lastName,
+        from_email: email,
+        phone: phone || 'Not provided',
+        company: company || 'Not provided',
+        service: service || 'Not specified',
+        budget: budget || 'Not specified',
+        message: message,
+        reply_to: email,
+    };
+
+    // Send email via EmailJS
+    emailjs.send(
+        'YOUR_SERVICE_ID_HERE',    // 🔴 Replace with your EmailJS Service ID  (e.g. 'service_abc123')
+        'YOUR_TEMPLATE_ID_HERE',   // 🔴 Replace with your EmailJS Template ID (e.g. 'template_xyz789')
+        templateParams
+    )
+    .then(function(response) {
+        console.log('Email sent successfully!', response.status, response.text);
+
+        // Success UI
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent Successfully!';
+        btn.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
+        btn.style.opacity = '1';
+        successMsg.style.display = 'block';
+        successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Your message has been sent to TrendZmediaSolution! We will get back to you within 24 hours at <strong>' + email + '</strong>';
+
+        // Reset after 6 seconds
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            form.reset();
+            successMsg.style.display = 'none';
+        }, 6000);
+    })
+    .catch(function(error) {
+        console.error('Email sending failed:', error);
+
+        // Error UI
+        btn.innerHTML = '<i class="fas fa-times"></i> Failed to Send. Try Again.';
+        btn.style.background = 'linear-gradient(135deg, #dc3545, #a71d2a)';
+        btn.style.opacity = '1';
+        btn.disabled = false;
+        successMsg.style.display = 'block';
+        successMsg.style.background = 'rgba(220, 53, 69, 0.15)';
+        successMsg.style.borderColor = 'rgba(220, 53, 69, 0.3)';
+        successMsg.style.color = '#dc3545';
+        successMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong! Please email us directly at <strong>kuldeepguptalhn@gmail.com</strong>';
 
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            btn.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
-            document.getElementById('successMsg').style.display = 'block';
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            successMsg.style.display = 'none';
+            successMsg.style.background = '';
+            successMsg.style.borderColor = '';
+            successMsg.style.color = '';
+        }, 7000);
+    });
+}
 
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                btn.style.background = '';
-                btn.disabled = false;
-                document.getElementById('contactForm').reset();
-                document.getElementById('successMsg').style.display = 'none';
-            }, 5000);
-        }, 2000);
+   // ===== NEWSLETTER - REAL EMAIL DELIVERY =====
+function subscribeNewsletter() {
+    const btn = event.currentTarget;
+    const inputField = btn.previousElementSibling;
+    const emailValue = inputField.value.trim();
+
+    // Validate email
+    if (!emailValue || !emailValue.includes('@') || !emailValue.includes('.')) {
+        inputField.style.borderColor = '#dc3545';
+        inputField.style.boxShadow = '0 0 0 3px rgba(220,53,69,0.2)';
+        inputField.placeholder = 'Please enter a valid email!';
+        setTimeout(() => {
+            inputField.style.borderColor = '';
+            inputField.style.boxShadow = '';
+            inputField.placeholder = 'your@email.com';
+        }, 3000);
+        return;
     }
 
-    // ===== NEWSLETTER =====
-    function subscribeNewsletter() {
-        const btn = event.currentTarget;
+    // Loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+    btn.disabled = true;
+
+    // Newsletter Email Parameters
+    const newsletterParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // 🔴 Your Gmail (already set)
+        subscriber_email: emailValue,
+        from_name: 'Newsletter Subscription',
+        message: 'New newsletter subscription from: ' + emailValue,
+        subject: '📧 New Newsletter Subscriber - TrendZmediaSolution',
+    };
+
+    // Send via EmailJS
+    emailjs.send(
+        'YOUR_SERVICE_ID_HERE',       // 🔴 Same Service ID as above
+        'YOUR_NEWSLETTER_TEMPLATE_ID', // 🔴 Can use same template or create new one for newsletter
+        newsletterParams
+    )
+    .then(function(response) {
+        console.log('Newsletter subscription sent!', response);
         btn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
         btn.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
+        inputField.value = '';
+        inputField.placeholder = 'Thank you for subscribing! ✓';
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe Now';
+            btn.style.background = '';
+            btn.disabled = false;
+            inputField.placeholder = 'your@email.com';
+        }, 4000);
+    })
+    .catch(function(error) {
+        console.error('Newsletter failed:', error);
+        btn.innerHTML = '<i class="fas fa-times"></i> Try Again';
+        btn.style.background = 'linear-gradient(135deg, #dc3545, #a71d2a)';
+        btn.disabled = false;
+
         setTimeout(() => {
             btn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe Now';
             btn.style.background = '';
         }, 3000);
+    });
+}
+// ===== UNSUBSCRIBE MODAL FUNCTIONS =====
+function openUnsubscribeModal() {
+    const modal = document.getElementById('unsubscribeModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // Reset modal to form state every time it opens
+    document.getElementById('unsubscribeForm').style.display = 'block';
+    document.getElementById('unsubSuccessState').style.display = 'none';
+    document.getElementById('unsubErrorMsg').style.display = 'none';
+    document.getElementById('unsubEmailInput').value = '';
+    document.getElementById('unsubReason').selectedIndex = 0;
+    const btn = document.getElementById('unsubBtn');
+    btn.innerHTML = '<i class="fas fa-bell-slash"></i> Unsubscribe Me';
+    btn.style.background = 'linear-gradient(135deg,#e63946,#c1121f)';
+    btn.disabled = false;
+}
+
+function closeUnsubscribeModal() {
+    const modal = document.getElementById('unsubscribeModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside the box
+document.getElementById('unsubscribeModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeUnsubscribeModal();
     }
+});
+
+// Close modal with ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeUnsubscribeModal();
+    }
+});
+
+function submitUnsubscribe(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('unsubEmailInput').value.trim();
+    const reason = document.getElementById('unsubReason').value || 'Not specified';
+    const btn = document.getElementById('unsubBtn');
+    const errorMsg = document.getElementById('unsubErrorMsg');
+
+    // Loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.disabled = true;
+    errorMsg.style.display = 'none';
+
+    // EmailJS - Send unsubscribe notification to your Gmail
+    const unsubParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // ✅ Your Gmail already set
+        from_name: 'Unsubscribe Request',
+        subscriber_email: email,
+        reason: reason,
+        subject: '🔕 Unsubscribe Request - TrendZmediaSolution',
+        message: 'User ' + email + ' has requested to unsubscribe. Reason: ' + reason,
+    };
+
+    emailjs.send(
+        'YOUR_SERVICE_ID_HERE',         // 🔴 Same Service ID
+        'YOUR_TEMPLATE_ID_HERE',        // 🔴 Same Template ID
+        unsubParams
+    )
+    .then(function(response) {
+        console.log('Unsubscribe email sent!', response);
+        // Show success state
+        document.getElementById('unsubscribeForm').style.display = 'none';
+        document.getElementById('unsubSuccessState').style.display = 'block';
+    })
+    .catch(function(error) {
+        console.error('Unsubscribe failed:', error);
+        btn.innerHTML = '<i class="fas fa-bell-slash"></i> Unsubscribe Me';
+        btn.disabled = false;
+        errorMsg.style.display = 'block';
+        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong. Please email us directly at <strong>kuldeepguptalhn@gmail.com</strong>';
+    });
+}
 
     // ===== NAVBAR SCROLL =====
     window.addEventListener('scroll', () => {
