@@ -3309,12 +3309,12 @@ function subscribeNewsletter() {
         subscriber_email: emailValue,
         from_name: 'Newsletter Subscription',
         message: 'New newsletter subscription from: ' + emailValue,
-        subject: '📧 New Newsletter Subscriber - TrendZmediaSolution',
+        subject: '📧 New Newsletter Subscriber - TrendZmediaSolutions',
     };
 
     // Send via EmailJS
     emailjs.send(
-        'YOUR_SERVICE_ID_HERE',       // 🔴 Same Service ID as above
+        'service_5adosyh',       // 🔴 Same Service ID as above
         'YOUR_NEWSLETTER_TEMPLATE_ID', // 🔴 Can use same template or create new one for newsletter
         newsletterParams
     )
