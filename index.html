@@ -1,0 +1,3491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendZmediaSolution</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your Public Key
+    emailjs.init("WkK2DOx4GFctMzaPl"); // 🔴 Replace with your EmailJS Public Key
+</script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --secondary: #1d3557;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --card-bg: #111111;
+            --border: #222222;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+            background: rgba(5, 5, 5, 0.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 75px;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            height: 65px;
+            box-shadow: 0 5px 30px rgba(230, 57, 70, 0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: #fff !important;
+            padding: 9px 20px !important;
+            border-radius: 25px !important;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.4);
+            background: var(--primary-dark) !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 75px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* ===== HOME PAGE ===== */
+        .hero {
+            min-height: calc(100vh - 75px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #050505 0%, #0d0d0d 50%, #120006 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.12) 0%, transparent 70%);
+            animation: pulse 6s infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(29, 53, 87, 0.3) 0%, transparent 70%);
+            animation: pulse 8s infinite reverse;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(230, 57, 70, 0.15);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            max-width: 560px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 25px rgba(230, 57, 70, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(230, 57, 70, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-wrap: wrap;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .hero-visual-inner {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            position: relative;
+        }
+
+        .floating-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            position: absolute;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 5%;
+            left: 10%;
+            width: 200px;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            bottom: 15%;
+            right: 5%;
+            width: 180px;
+            animation-delay: 1.5s;
+        }
+
+        .floating-card:nth-child(3) {
+            top: 40%;
+            left: 5%;
+            width: 160px;
+            animation-delay: 0.8s;
+        }
+
+        .central-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 20px 60px rgba(230, 57, 70, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(230, 57, 70, 0.3);
+            border-radius: 50%;
+            animation: rotate 15s linear infinite;
+        }
+
+        .orbit-ring:nth-child(1) {
+            width: 280px;
+            height: 280px;
+        }
+
+        .orbit-ring:nth-child(2) {
+            width: 380px;
+            height: 380px;
+            animation-direction: reverse;
+            animation-duration: 20s;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .fc-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .fc-icon.red { background: rgba(230, 57, 70, 0.2); color: var(--primary); }
+        .fc-icon.blue { background: rgba(29, 53, 87, 0.5); color: #6ea8fe; }
+        .fc-icon.green { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+
+        .fc-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ddd;
+            margin-bottom: 4px;
+        }
+
+        .fc-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* ===== SERVICES SECTION ON HOME ===== */
+        .section {
+            padding: 90px 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(230, 57, 70, 0.15);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border: 1px solid rgba(230, 57, 70, 0.25);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: #888;
+            font-size: 1rem;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(230, 57, 70, 0.3);
+            box-shadow: 0 20px 50px rgba(230, 57, 70, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.15), rgba(230, 57, 70, 0.05));
+            border: 1px solid rgba(230, 57, 70, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: #888;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-size: 0.83rem;
+            font-weight: 600;
+            margin-top: 18px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            transition: gap 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .read-more-btn:hover {
+            gap: 10px;
+        }
+
+        .expanded-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            color: #999;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        .expanded-content.show {
+            display: block;
+        }
+
+        .expanded-content ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .expanded-content ul li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .expanded-content ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== WHY CHOOSE US ===== */
+        .why-section {
+            background: linear-gradient(135deg, #0d0d0d, #0a0014);
+            padding: 90px 5%;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .why-left h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .why-left p {
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .why-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .why-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .why-feature-icon {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            background: rgba(230, 57, 70, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .why-feature-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .why-feature-text p {
+            font-size: 0.8rem;
+            color: #777;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .why-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-card:nth-child(1) {
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.1), rgba(230, 57, 70, 0.02));
+        }
+
+        .stat-card h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.82rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: rgba(230, 57, 70, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .author-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .author-role {
+            font-size: 0.78rem;
+            color: #777;
+        }
+
+        /* ===== ABOUT PAGE ===== */
+        .page-hero {
+            padding: 80px 5% 60px;
+            background: linear-gradient(135deg, #050505 0%, #0d0d0d 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(230, 57, 70, 0.08) 0%, transparent 70%);
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .page-hero p {
+            color: #888;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: #777;
+        }
+
+        .breadcrumb span {
+            color: var(--primary);
+        }
+
+        .about-story {
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--card-bg), #1a1a1a);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .about-img-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .about-img-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .about-img-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 20px 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+        }
+
+        .about-badge h3 {
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .about-badge p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .about-text h2 {
+            font-size: clamp(1.7rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            color: #999;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .read-more-section {
+            cursor: pointer;
+        }
+
+        .about-values {
+            background: #0d0d0d;
+            padding: 80px 5%;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(230, 57, 70, 0.08);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .value-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            color: #777;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .team-section {
+            padding: 80px 5%;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateY(-8px);
+        }
+
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.3);
+        }
+
+        .team-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .team-card .role {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .team-card p {
+            color: #777;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        /* ===== SERVICES PAGE ===== */
+        .full-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 60px 5%;
+        }
+
+        .full-service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .full-service-card:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(230, 57, 70, 0.1);
+        }
+
+        .service-card-header {
+            padding: 35px 30px 25px;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), transparent);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .service-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .service-card-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-card-header p {
+            color: #888;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .service-card-body {
+            padding: 25px 30px 30px;
+        }
+
+        .service-feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.87rem;
+            color: #aaa;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .service-feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-feature-list li i {
+            color: var(--primary);
+            width: 16px;
+        }
+
+        .service-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .service-price-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-price-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ===== CONTACT PAGE ===== */
+        .contact-wrapper {
+            padding: 60px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-info-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 35px;
+        }
+
+        .contact-info-block h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .contact-info-block p {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: rgba(230, 57, 70, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .contact-details h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .contact-details p {
+            font-size: 0.82rem;
+            color: #777;
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .social-btn.fb { background: rgba(24, 119, 242, 0.15); color: #1877f2; }
+        .social-btn.tw { background: rgba(29, 161, 242, 0.15); color: #1da1f2; }
+        .social-btn.ig { background: rgba(225, 48, 108, 0.15); color: #e1306c; }
+        .social-btn.li { background: rgba(10, 102, 194, 0.15); color: #0a66c2; }
+        .social-btn.yt { background: rgba(255, 0, 0, 0.15); color: #ff0000; }
+
+        .social-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .contact-form-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 45px 40px;
+        }
+
+        .contact-form-block h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contact-form-block .form-subtitle {
+            color: #888;
+            font-size: 0.88rem;
+            margin-bottom: 35px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #bbb;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px 16px;
+            color: #fff;
+            font-size: 0.88rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            background: rgba(230, 57, 70, 0.04);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+        }
+
+        .success-msg {
+            display: none;
+            background: rgba(40, 167, 69, 0.15);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #28a745;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* ===== TERMS PAGE ===== */
+        .terms-content {
+            padding: 60px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .terms-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 35px 40px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .terms-section:hover {
+            border-color: rgba(230, 57, 70, 0.2);
+        }
+
+        .terms-section h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terms-section h2 i {
+            font-size: 1rem;
+        }
+
+        .terms-section p {
+            color: #888;
+            font-size: 0.88rem;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+
+        .terms-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .terms-section ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .terms-section ul li {
+            color: #888;
+            font-size: 0.87rem;
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .terms-section ul li::before {
+            content: '▸';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .terms-date {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 0.82rem;
+        }
+
+        /* ===== PRIVACY PAGE ===== */
+        .privacy-highlight {
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.02));
+            border: 1px solid rgba(230, 57, 70, 0.2);
+            border-radius: 16px;
+            padding: 30px 35px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .privacy-highlight i {
+            font-size: 2rem;
+            color: var(--primary);
+            min-width: 40px;
+        }
+
+        .privacy-highlight p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border);
+            padding: 70px 5% 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-newsletter input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 11px 15px;
+            color: #fff;
+            font-size: 0.83rem;
+            margin-bottom: 10px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .footer-newsletter input:focus {
+            border-color: var(--primary);
+        }
+
+        .footer-newsletter button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 11px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter button:hover {
+            opacity: 0.9;
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: #555;
+            font-size: 0.82rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #555;
+            font-size: 0.82rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 75px;
+            left: 0;
+            right: 0;
+            background: rgba(5, 5, 5, 0.99);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 5px;
+            backdrop-filter: blur(20px);
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            color: var(--primary);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.4);
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== LOADING BAR ===== */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            z-index: 9999;
+        }
+
+        .page-loader-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #ff6b6b);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 0 5%;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 90px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.02));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(230, 57, 70, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: #888;
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 35px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-visual { display: none; }
+            .hero-content { max-width: 100%; }
+            .why-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-story { grid-template-columns: 1fr; }
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .why-features { grid-template-columns: 1fr; }
+            .why-right { grid-template-columns: 1fr 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .contact-form-block { padding: 30px 20px; }
+            .contact-info-block { padding: 30px 20px; }
+            .terms-section { padding: 25px 20px; }
+            .hero-stats { gap: 25px; }
+            .section { padding: 60px 4%; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 60px 4%; }
+            .hero h1 { font-size: 2rem; }
+            .hero-btns { flex-direction: column; }
+            .btn-primary, .btn-outline { justify-content: center; }
+            .about-badge { right: 0; bottom: -15px; }
+            .full-services-grid { grid-template-columns: 1fr; padding: 40px 4%; }
+            nav { padding: 0 4%; }
+            .section { padding: 50px 4%; }
+        }
+        /* ===== UNSUBSCRIBE MODAL ANIMATION ===== */
+       @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+     }
+     to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- Loading Bar -->
+<div class="page-loader">
+    <div class="page-loader-bar" id="loaderBar"></div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+    <a class="logo" onclick="showPage('home')">
+        <div class="logo-icon">T</div>
+        <span class="logo-text">TrendZ<span>media</span>Solutions</span>
+    </a>
+
+
+    <ul class="nav-links">
+        <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+        <li><a onclick="showPage('about')" id="nav-about">About Us</a></li>
+        <li><a onclick="showPage('services')" id="nav-services">Our Services</a></li>
+        <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+        <li><a onclick="showPage('terms')" id="nav-terms">Terms & Policy</a></li>
+        <li><a onclick="showPage('privacy')" id="nav-privacy">Privacy</a></li>
+        <li><a onclick="showPage('contact')" class="nav-cta">Get Started</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a onclick="showPage('home'); closeMenu()" id="mnav-home" class="active">🏠 Home</a>
+    <a onclick="showPage('about'); closeMenu()" id="mnav-about">👥 About Us</a>
+    <a onclick="showPage('services'); closeMenu()" id="mnav-services">⚡ Our Services</a>
+    <a onclick="showPage('contact'); closeMenu()" id="mnav-contact">📞 Contact</a>
+    <a onclick="showPage('terms'); closeMenu()" id="mnav-terms">📋 Terms & Policy</a>
+    <a onclick="showPage('privacy'); closeMenu()" id="mnav-privacy">🔒 Privacy</a>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                #1 Digital Media Solution
+            </div>
+            <h1>
+                Powering Your Brand <br>with <span class="highlight">Digital Excellence</span>
+            </h1>
+            <p>TrendZmediaSolutions delivers cutting-edge digital marketing, media production, and branding strategies that transform businesses and maximize your online presence in today's competitive landscape.</p>
+            <div class="hero-btns">
+                <a class="btn-primary" onclick="showPage('services')">
+                    <i class="fas fa-rocket"></i>
+                    Explore Services
+                </a>
+                <a class="btn-outline" onclick="showPage('contact')">
+                    <i class="fas fa-phone"></i>
+                    Talk to Us
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>100+</h3>
+                    <p>Projects Done</p>
+                </div>
+                <div class="stat-item">
+                    <h3>80+</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Success Rate</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-visual-inner">
+                <div class="orbit-ring">
+                    <div class="orbit-dot"></div>
+                </div>
+                <div class="orbit-ring">
+                    <div class="orbit-dot"></div>
+                </div>
+                <div class="central-logo">📱</div>
+                <div class="floating-card">
+                    <div class="fc-icon red"><i class="fas fa-chart-line"></i></div>
+                    <div class="fc-title">Growth Rate</div>
+                    <div class="fc-value">+247%</div>
+                </div>
+                <div class="floating-card">
+                    <div class="fc-icon blue"><i class="fas fa-users"></i></div>
+                    <div class="fc-title">Reach</div>
+                    <div class="fc-value">2.4M</div>
+                </div>
+                <div class="floating-card">
+                    <div class="fc-icon green"><i class="fas fa-star"></i></div>
+                    <div class="fc-title">Rating</div>
+                    <div class="fc-value">4.9★</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview on Home -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag">What We Do</div>
+            <h2 class="section-title">Our Core <span style="color: var(--primary)">Services</span></h2>
+            <p class="section-subtitle">We provide comprehensive digital solutions to help your business thrive in the modern digital landscape.</p>
+        </div>
+        <div class="services-grid">
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
+                <h3>Digital Marketing</h3>
+                <p>Comprehensive digital marketing strategies including SEO, PPC, social media marketing, and content creation to boost your online visibility.</p>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="expanded-content">
+                    <p>Our digital marketing experts craft tailored campaigns that drive real results. We analyze your target audience, competition, and market trends to develop strategies that deliver measurable ROI.</p>
+                    <ul>
+                        <li>Search Engine Optimization (SEO)</li>
+                        <li>Pay-Per-Click Advertising (PPC)</li>
+                        <li>Social Media Marketing & Management</li>
+                        <li>Email Marketing Campaigns</li>
+                        <li>Content Marketing Strategy</li>
+                        <li>Analytics & Performance Reporting</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
+                <h3>Media Production</h3>
+                <p>Professional video production, photography, and multimedia content creation that tells your brand story with impact and creativity.</p>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="expanded-content">
+                    <p>From concept to final cut, our media production team creates stunning visual content that captivates your audience and drives engagement across all platforms.</p>
+                    <ul>
+                        <li>Corporate Video Production</li>
+                        <li>Commercial & Ad Production</li>
+                        <li>Product Photography & Videography</li>
+                        <li>Social Media Content Creation</li>
+                        <li>Animation & Motion Graphics</li>
+                        <li>Podcast & Audio Production</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-palette"></i></div>
+                <h3>Brand Identity Design</h3>
+                <p>Crafting powerful, memorable brand identities that resonate with your target audience and differentiate you from the competition.</p>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="expanded-content">
+                    <p>Your brand is more than a logo — it's the entire experience customers have with your business. We create cohesive brand identities that build trust and recognition.</p>
+                    <ul>
+                        <li>Logo Design & Brand Guidelines</li>
+                        <li>Visual Identity Systems</li>
+                        <li>Brand Strategy & Positioning</li>
+                        <li>Packaging Design</li>
+                        <li>Marketing Collateral Design</li>
+                        <li>Brand Audit & Refresh</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <h3>Email Marketing</h3>
+                <p>Strategic email marketing campaigns designed to engage your audience, nurture leads, and drive conversions through personalized communication.</p>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="expanded-content">
+                    <p>We build fast, secure, and scalable websites and web applications tailored to your specific business needs. Our development team uses the latest technologies to deliver exceptional results.</p>
+                    <ul>
+                        <li>Email Campaign Strategy & Planning</li>
+                        <li>Newsletter Design & Management</li>
+                        <li>Automated Email Sequences</li>
+                        <li>Lead Nurturing Campaigns</li>
+                        <li>Email List Building & Segmentation</li>
+                        <li>CRM & Email Platform Integration</li>
+                    </ul>
+                </div>
+            </div>
+
+           
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3>Analytics & Strategy</h3>
+                <p>Data-driven insights and strategic planning to optimize your digital performance and make informed business decisions.</p>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="expanded-content">
+                    <p>We transform complex data into actionable insights. Our analytics experts help you understand your audience, track performance, and continuously optimize your digital strategy.</p>
+                    <ul>
+                        <li>Data Analytics & Reporting</li>
+                        <li>Conversion Rate Optimization</li>
+                        <li>Market Research & Analysis</li>
+                        <li>Competitive Intelligence</li>
+                        <li>KPI Tracking & Dashboards</li>
+                        <li>Growth Strategy Consulting</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Why Choose Us -->
+    <section class="why-section">
+        <div class="why-grid">
+            <div class="why-left">
+                <div class="section-tag">Why Choose Us</div>
+                <h2>We Don't Just Deliver — <span style="color:var(--primary)">We Over-Deliver</span></h2>
+                <p>TrendZmediaSolutions is committed to excellence in every project. Our team of experts brings together creativity, technology, and strategy to produce results that exceed your expectations.</p>
+                <div class="why-features">
+                    <div class="why-feature">
+                        <div class="why-feature-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="why-feature-text">
+                            <h4>Award Winning</h4>
+                            <h4>Award Winning</h4>
+                            <p>Industry recognized excellence</p>
+                        </div>
+                    </div>
+                    <div class="why-feature">
+                        <div class="why-feature-icon"><i class="fas fa-clock"></i></div>
+                        <div class="why-feature-text">
+                            <h4>On-Time Delivery</h4>
+                            <p>We respect your deadlines</p>
+                        </div>
+                    </div>
+                    <div class="why-feature">
+                        <div class="why-feature-icon"><i class="fas fa-headset"></i></div>
+                        <div class="why-feature-text">
+                            <h4>24/7 Support</h4>
+                            <p>Always here when you need us</p>
+                        </div>
+                    </div>
+                    <div class="why-feature">
+                        <div class="why-feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="why-feature-text">
+                            <h4>Trusted & Secure</h4>
+                            <p>Your data is always safe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="why-right">
+                <div class="stat-card">
+                    <h2>200+</h2>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-card">
+                    <h2>150+</h2>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-card">
+                    <h2>4+</h2>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <h2>98%</h2>
+                    <p>Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag">Client Love</div>
+            <h2 class="section-title">What Our <span style="color:var(--primary)">Clients Say</span></h2>
+            <p class="section-subtitle">Don't just take our word for it. Here's what our amazing clients have to say about working with us.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"TrendZmediaSolutions completely transformed our digital presence. Our website traffic increased by 300% and our social media following doubled in just 3 months. Absolutely outstanding team!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div>
+                        <div class="author-name">Rahul Sharma</div>
+                        <div class="author-role">CEO, TechVenture India</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The video production quality was exceptional. Our product launch campaign got over 1 million views on YouTube. These guys know their craft inside out. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">P</div>
+                    <div>
+                        <div class="author-name">Abishek Kumar Das</div>
+                        <div class="author-role">Marketing Director, FashionHub</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Working with TrendZmediaSolution was a game-changer. Their branding expertise helped us stand out in a crowded market. Professional, creative, and results-driven team!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">A</div>
+                    <div>
+                        <div class="author-name">Krishna Chaudhary</div>
+                        <div class="author-role">Founder, GreenEarth Startup</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="section-tag">Ready to Grow?</div>
+        <h2>Let's Build Something <span style="color:var(--primary)">Amazing</span> Together</h2>
+        <p>Join 350+ businesses who trust TrendZmediaSolutions to power their digital growth journey.</p>
+        <a class="btn-primary" onclick="showPage('contact')" style="display:inline-flex; margin: 0 auto;">
+            <i class="fas fa-rocket"></i> Start Your Project Today
+        </a>
+    </section>
+
+</div>
+
+<!-- ===== ABOUT PAGE ===== -->
+<div class="page" id="page-about">
+
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a onclick="showPage('home')" style="color:#777;cursor:pointer;">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:0.7rem;color:#555"></i>
+                <span>About Us</span>
+            </div>
+            <h1>About <span style="color:var(--primary)">TrendZmediaSolutions</span></h1>
+            <p>We are a passionate team of digital experts dedicated to transforming businesses through innovative media solutions and strategic digital marketing.</p>
+        </div>
+    </div>
+
+    <!-- Our Story -->
+    <div class="about-story">
+        <div class="about-img-wrap">
+            <div class="about-img-main">
+                <div class="about-img-content">
+                    <span class="about-img-icon">🚀</span>
+                    <div class="about-img-text">TrendZmediaSolutions</div>
+                    <p style="color:#888;margin-top:10px;font-size:0.85rem;">Innovating Since 2016</p>
+                </div>
+            </div>
+            <div class="about-badge">
+                <h3>4+</h3>
+                <p>Years of Excellence</p>
+            </div>
+        </div>
+
+        <div class="about-text">
+            <div class="section-tag">Our Story</div>
+            <h2>Driven by Passion, <span style="color:var(--primary)">Powered by Innovation</span></h2>
+            <p>TrendZmediaSolutions was founded in 2016 with a simple yet powerful vision: to help businesses of all sizes harness the power of digital media to grow, connect, and succeed in an increasingly competitive world.</p>
+            <p>What started as a small team of three passionate digital enthusiasts has grown into a full-service media powerhouse with a team of 50+ experts spanning digital marketing, content creation, web development, app development, and brand strategy.</p>
+
+            <div class="read-more-section" id="about-read-more-section">
+                <div class="expanded-content" id="about-full-story">
+                    <p>Over the years, we've had the privilege of partnering with startups, SMEs, and large corporations across various industries — from healthcare and education to retail and technology. Each partnership has taught us something new and made us better at what we do.</p>
+                    <p>Our philosophy is simple: every client is unique, and so should be their digital strategy. We take time to understand your business, your audience, and your goals before crafting customized solutions that deliver measurable results.</p>
+                    <p>At TrendZmediaSolution, we don't just execute campaigns — we build long-term relationships. We're invested in your success because when you grow, we grow. That's the TrendZ way.</p>
+                    <ul>
+                        <li>Founded in 2016 with a vision for digital excellence</li>
+                        <li>Grown to 50+ passionate team members</li>
+                        <li>Served 350+ clients across 15+ industries</li>
+                        <li>Completed 500+ successful projects</li>
+                        <li>Expanded to serve clients globally</li>
+                    </ul>
+                </div>
+                <button class="read-more-btn" onclick="toggleAboutStory(this)" style="margin-top:10px;">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div style="display:flex;gap:15px;margin-top:25px;flex-wrap:wrap;">
+                <a class="btn-primary" onclick="showPage('services')" style="font-size:0.85rem;padding:12px 25px;">
+                    <i class="fas fa-cogs"></i> Our Services
+                </a>
+                <a class="btn-outline" onclick="showPage('contact')" style="font-size:0.85rem;padding:12px 25px;">
+                    <i class="fas fa-envelope"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Values -->
+    <div class="about-values">
+        <div class="section-header">
+            <div class="section-tag">Our DNA</div>
+            <h2 class="section-title">The Values That <span style="color:var(--primary)">Drive Us</span></h2>
+            <p class="section-subtitle">These core values define who we are and how we approach every project and partnership.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <h3>Results-Driven</h3>
+                <p>Every strategy we create is focused on delivering measurable outcomes. We set clear KPIs and continuously optimize to ensure you get the best possible ROI.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">💡</div>
+                <h3>Innovation First</h3>
+                <p>The digital landscape evolves daily. We stay ahead of trends and technologies to bring you cutting-edge solutions that keep you competitive and relevant.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3>Client Partnership</h3>
+                <p>We believe in building genuine partnerships, not just client relationships. Your success is our success, and we're with you every step of the journey.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">✨</div>
+                <h3>Creative Excellence</h3>
+                <p>Creativity is at the heart of everything we do. Our team pushes creative boundaries to produce work that stands out and makes a lasting impression.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔒</div>
+                <h3>Integrity & Trust</h3>
+                <p>Transparency, honesty, and ethical practices are non-negotiable. We communicate openly and deliver on every promise we make to our clients.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">📈</div>
+                <h3>Continuous Growth</h3>
+                <p>We invest in our team's growth, staying current with industry developments and continuously improving our skills to serve you better.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+        <div class="section-header">
+            <div class="section-tag">The Dream Team</div>
+            <h2 class="section-title">Meet the <span style="color:var(--primary)">Experts</span></h2>
+            <p class="section-subtitle">Our talented team of professionals brings together diverse skills and a shared passion for digital excellence.</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">👨‍💼</div>
+                <h3>Vikram Trendz</h3>
+                <div class="role">Founder & CEO</div>
+                <p>8+ years leading digital innovation. Visionary strategist with expertise in digital transformation and business growth.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">👩‍🎨</div>
+                <h3>Sneha Kapoor</h3>
+                <div class="role">Creative Director</div>
+                <p>Award-winning designer with a passion for crafting brand identities that captivate audiences and drive engagement.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">👨‍💻</div>
+                <h3>Arjun Mehta</h3>
+                <div class="role">Head of Technology</div>
+                <p>Full-stack architect specializing in scalable web and mobile solutions with 7+ years of development excellence.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">👩‍📊</div>
+                <h3>Deepika Rao</h3>
+                <div class="role">Marketing Strategist</div>
+                <p>Data-driven marketing expert who transforms analytics into powerful campaigns that generate real business results.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="section-tag">Work With Us</div>
+        <h2>Ready to <span style="color:var(--primary)">Transform</span> Your Business?</h2>
+        <p>Partner with TrendZmediaSolutions and let's create something extraordinary together.</p>
+        <a class="btn-primary" onclick="showPage('contact')" style="display:inline-flex;margin:0 auto;">
+            <i class="fas fa-handshake"></i> Let's Collaborate
+        </a>
+    </section>
+
+</div>
+
+<!-- ===== SERVICES PAGE ===== -->
+<div class="page" id="page-services">
+
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a onclick="showPage('home')" style="color:#777;cursor:pointer;">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:0.7rem;color:#555"></i>
+                <span>Our Services</span>
+            </div>
+            <h1>Our <span style="color:var(--primary)">Services</span></h1>
+            <p>Comprehensive digital solutions designed to elevate your brand, engage your audience, and accelerate your business growth.</p>
+        </div>
+    </div>
+
+    <div class="full-services-grid">
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">01</div>
+                <h3><i class="fas fa-bullhorn" style="color:var(--primary);margin-right:10px;"></i>Digital Marketing</h3>
+                <p>Full-funnel digital marketing strategies that attract, engage, and convert your target audience across all digital channels.</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Search Engine Optimization (SEO)</li>
+                    <li><i class="fas fa-check"></i> Google & Meta Ads Management</li>
+                    <li><i class="fas fa-check"></i> Social Media Marketing</li>
+                    <li><i class="fas fa-check"></i> Email & WhatsApp Marketing</li>
+                    <li><i class="fas fa-check"></i> Influencer Marketing</li>
+                    <li><i class="fas fa-check"></i> Content Marketing & Blogging</li>
+                    <li><i class="fas fa-check"></i> Monthly Analytics Reports</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">02</div>
+                <h3><i class="fas fa-video" style="color:var(--primary);margin-right:10px;"></i>Media Production</h3>
+                <p>Professional video, photography, and multimedia content that tells your story with impact and authenticity.</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Corporate & Brand Videos</li>
+                    <li><i class="fas fa-check"></i> TV Commercials & Ads</li>
+                    <li><i class="fas fa-check"></i> Product Photography</li>
+                    <li><i class="fas fa-check"></i> Social Media Content (Reels, Shorts)</li>
+                    <li><i class="fas fa-check"></i> 2D/3D Animation</li>
+                    <li><i class="fas fa-check"></i> Event Coverage & Live Streaming</li>
+                    <li><i class="fas fa-check"></i> Post-Production & Editing</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">03</div>
+                <h3><i class="fas fa-palette" style="color:var(--primary);margin-right:10px;"></i>Brand Identity Design</h3>
+                <p>Creating powerful visual identities that communicate your brand's personality, values, and unique proposition.</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Logo Design & Branding</li>
+                    <li><i class="fas fa-check"></i> Brand Style Guides</li>
+                    <li><i class="fas fa-check"></i> Business Card & Stationery</li>
+                    <li><i class="fas fa-check"></i> Packaging & Label Design</li>
+                    <li><i class="fas fa-check"></i> Marketing Materials</li>
+                    <li><i class="fas fa-check"></i> Social Media Branding</li>
+                    <li><i class="fas fa-check"></i> Brand Audit & Strategy</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">04</div>
+                <h3><i class="fas fa-globe" style="color:var(--primary);margin-right:10px;"></i>Email Marketing</h3>
+                <p>Strategic email marketing campaigns designed to engage your audience, nurture leads, and drive conversions through personalized communication</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Email Campaign Strategy & Planning</li>
+                    <li><i class="fas fa-check"></i> Newsletter Design & Management</li>
+                    <li><i class="fas fa-check"></i> Automated Email Sequences</li>
+                    <li><i class="fas fa-check"></i> Lead Nurturing Campaigns</li>
+                    <li><i class="fas fa-check"></i> Email List Building & Segmentation</li>
+                    <li><i class="fas fa-check"></i> Email Analytics & Reporting</li>
+                    <li><i class="fas fa-check"></i> CRM & Email Platform Integration</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">05</div>
+                <h3><i class="fas fa-mobile-alt" style="color:var(--primary);margin-right:10px;"></i>Bulk Email Setup</h3>
+                <p>Professional bulk email infrastructure setup to help businesses send high-volume emails with better deliverability, security, and performance.</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Bulk Email Server Setup</li>
+                    <li><i class="fas fa-check"></i> SMTP Configuration & Integration</li>
+                    <li><i class="fas fa-check"></i> Domain Authentication (SPF, DKIM & DMARC)</li>
+                    <li><i class="fas fa-check"></i> Email Deliverability Optimization</li>
+                    <li><i class="fas fa-check"></i> Email Warm-Up & Reputation Management</li>
+                    <li><i class="fas fa-check"></i> Bulk Campaign Setup & Management</li>
+                    <li><i class="fas fa-check"></i> Email Tracking & Analytics</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="full-service-card">
+            <div class="service-card-header">
+                <div class="service-num">06</div>
+                <h3><i class="fas fa-chart-bar" style="color:var(--primary);margin-right:10px;"></i>Analytics & Strategy</h3>
+                <p>Comprehensive data analytics and digital strategy consulting to optimize performance and drive sustainable growth.</p>
+            </div>
+            <div class="service-card-body">
+                <ul class="service-feature-list">
+                    <li><i class="fas fa-check"></i> Digital Strategy Development</li>
+                    <li><i class="fas fa-check"></i> Market & Competitor Analysis</li>
+                    <li><i class="fas fa-check"></i> Google Analytics Setup & Reports</li>
+                    <li><i class="fas fa-check"></i> Conversion Rate Optimization</li>
+                    <li><i class="fas fa-check"></i> Customer Journey Mapping</li>
+                    <li><i class="fas fa-check"></i> A/B Testing & Experimentation</li>
+                    <li><i class="fas fa-check"></i> Growth Hacking Strategies</li>
+                </ul>
+                <a class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section" style="margin-top:20px;">
+        <div class="section-tag">Custom Solutions</div>
+        <h2>Need a <span style="color:var(--primary)">Custom Solution?</span></h2>
+        <p>Every business is unique. Let us create a tailored package that perfectly matches your specific needs and budget.</p>
+        <a class="btn-primary" onclick="showPage('contact')" style="display:inline-flex;margin:0 auto;">
+            <i class="fas fa-comments"></i> Discuss Your Project
+        </a>
+    </section>
+
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div class="page" id="page-contact">
+
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a onclick="showPage('home')" style="color:#777;cursor:pointer;">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:0.7rem;color:#555"></i>
+                <span>Contact</span>
+            </div>
+            <h1>Get In <span style="color:var(--primary)">Touch</span></h1>
+            <p>Have a project in mind? We'd love to hear from you. Send us a message and we'll get back to you within 24 hours.</p>
+        </div>
+    </div>
+
+    <div class="contact-wrapper">
+
+        <div class="contact-info-block">
+            <h3>Contact Information</h3>
+            <p>Reach out to us through any of these channels. Our team is ready to help you grow your business.</p>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="contact-details">
+                    <h4>Our Office</h4>
+                    <p>Tech Solution ,<br>Kathmandu, Koteshwor 40070, Nepal</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                <div class="contact-details">
+                    <h4>Phone / WhatsApp</h4>
+                    <p>+977 98765 43210<br>+977 87654 32109</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-details">
+                    <h4>Email Address</h4>
+                    <p>hello@trendzmediasolution.com<br>support@trendzmediasolution.com</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                <div class="contact-details">
+                    <h4>Working Hours</h4>
+                    <p>Monday – Friday: 9:00 AM – 5:00 PM<br>Sunday: By Appointment Only</p>
+                </div>
+            </div>
+
+           
+        </div>
+
+        <div class="contact-form-block">
+            <h3>Send Us a Message</h3>
+            <p class="form-subtitle">Fill in the form below and we'll get back to you shortly.</p>
+
+            <form id="contactForm" onsubmit="submitForm(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name *</label>
+                        <input type="text" placeholder="Your first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name *</label>
+                        <input type="text" placeholder="Your last name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+91 00000 00000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Company / Business Name</label>
+                    <input type="text" placeholder="Your company name">
+                </div>
+
+                <div class="form-group">
+                    <label>Service Interested In *</label>
+                    <select required>
+                        <option value="" disabled selected>Select a service</option>
+                        <option>Digital Marketing</option>
+                        <option>Media Production</option>
+                        <option>Brand Identity Design</option>
+                        <option>Web Development</option>
+                        <option>App Development</option>
+                        <option>Analytics & Strategy</option>
+                        <option>Custom Package</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget Range</label>
+                    <select>
+                        <option value="" disabled selected>Select budget range</option>
+                        <option>Below ₹25,000</option>
+                        <option>₹25,000 – ₹75,000</option>
+                        <option>₹75,000 – ₹2,00,000</option>
+                        <option>₹2,00,000 – ₹5,00,000</option>
+                        <option>Above ₹5,00,000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Message *</label>
+                    <textarea placeholder="Tell us about your project, goals, and any specific requirements..." required></textarea>
+                </div>
+
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <div class="success-msg" id="successMsg">
+                    <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Map Placeholder -->
+    <div style="padding:0 5% 60px;">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;overflow:hidden;height:300px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;">
+            <i class="fas fa-map-marked-alt" style="font-size:3rem;color:var(--primary);opacity:0.5;"></i>
+            <p style="color:#555;font-size:0.9rem;">📍 Saraswati Mata Marga, Kathmandu 44600</p>
+            <a href="https://maps.google.com" target="_blank" class="btn-primary" style="font-size:0.83rem;padding:10px 22px;">
+                <i class="fas fa-directions"></i> Get Directions
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== TERMS & POLICY PAGE ===== -->
+<div class="page" id="page-terms">
+
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a onclick="showPage('home')" style="color:#777;cursor:pointer;">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:0.7rem;color:#555"></i>
+                <span>Terms & Policy</span>
+            </div>
+            <h1>Terms & <span style="color:var(--primary)">Policy</span></h1>
+            <p>Please read these terms and conditions carefully before using our services. Your use of our services constitutes acceptance of these terms.</p>
+        </div>
+    </div>
+
+    <div class="terms-content">
+
+        <div class="privacy-highlight">
+            <i class="fas fa-info-circle"></i>
+            <p><strong style="color:#fff;">Last Updated: January 1, 2024</strong> — By accessing or using TrendZmediaSolution's services, website, or any associated platforms, you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, please do not use our services.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-handshake"></i> 1. Acceptance of Terms</h2>
+            <p>Welcome to TrendZmediaSolution. These Terms and Conditions govern your use of our website located at www.trendzmediasolution.com and all related services provided by TrendZmediaSolution ("Company", "we", "us", or "our").</p>
+            <p>By accessing our website or engaging our services, you acknowledge that you have read, understood, and agree to be bound by these Terms. These Terms apply to all visitors, users, clients, and others who access or use our services.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-briefcase"></i> 2. Services & Scope of Work</h2>
+            <p>TrendZmediaSolution provides digital media solutions including but not limited to digital marketing, media production, brand identity design, web development, mobile app development, and analytics services.</p>
+            <ul>
+                <li>All service deliverables will be clearly defined in a written agreement or project proposal before commencement</li>
+                <li>The scope of work, timeline, and payment terms will be mutually agreed upon in writing</li>
+                <li>Any changes to the agreed scope must be documented and may incur additional charges</li>
+                <li>We reserve the right to subcontract portions of work to qualified third-party partners</li>
+                <li>We guarantee the quality of all delivered work as per the agreed specifications</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-credit-card"></i> 3. Payment Terms & Conditions</h2>
+            <p>Our payment terms are designed to be fair and transparent for both parties. Here are the standard payment conditions:</p>
+            <ul>
+                <li>A non-refundable advance payment of 50% is required before project commencement</li>
+                <li>The remaining 50% is due upon project completion and before final deliverable handover</li>
+                <li>Payments can be made via bank transfer, UPI, credit card, or other accepted methods</li>
+                <li>Late payments beyond 15 days from due date may incur a 2% monthly interest charge</li>
+                <li>All prices are exclusive of applicable taxes unless otherwise stated</li>
+                <li>Refund requests will be considered on a case-by-case basis per our refund policy</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-copyright"></i> 4. Intellectual Property Rights</h2>
+            <p>Understanding ownership of created content and materials is essential for both parties:</p>
+            <ul>
+                <li>Upon receipt of full payment, intellectual property rights of custom-created work transfer to the client</li>
+                <li>TrendZmediaSolution retains the right to display completed work in our portfolio</li>
+                <li>Any third-party materials (stock images, fonts, plugins) remain subject to their respective licenses</li>
+                <li>Our proprietary tools, processes, and methodologies remain the exclusive property of TrendZmediaSolution</li>
+                <li>Clients warrant that all materials provided to us do not infringe any third-party rights</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-ban"></i> 5. Prohibited Uses</h2>
+            <p>You agree not to use our services or website for any of the following purposes:</p>
+            <ul>
+                <li>Any unlawful, harmful, or fraudulent activities</li>
+                <li>Transmitting spam, malware, or harmful software</li>
+                <li>Infringing on intellectual property rights of others</li>
+                <li>Harassment, abuse, or threatening behavior toward our team</li>
+                <li>Attempting to gain unauthorized access to our systems</li>
+                <li>Creating or promoting content that is illegal, defamatory, or obscene</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> 6. Limitation of Liability</h2>
+            <p>TrendZmediaSolution shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services, including but not limited to:</p>
+            <ul>
+                <li>Loss of profits, revenue, or business opportunities</li>
+                <li>Loss of data or digital assets</li>
+                <li>Service interruptions or downtime beyond our control</li>
+                <li>Third-party platform changes affecting campaign performance</li>
+                <li>Results from digital marketing campaigns (we provide best-effort optimization)</li>
+            </ul>
+            <p>Our maximum liability in any case shall not exceed the total amount paid by the client for the specific service in question.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-times-circle"></i> 7. Termination Policy</h2>
+            <p>Either party may terminate the service agreement under the following conditions:</p>
+            <ul>
+                <li>Client may terminate with 30 days written notice; advance payments are non-refundable</li>
+                <li>We may terminate immediately in cases of non-payment or breach of terms</li>
+                <li>Upon termination, all completed work will be delivered upon settlement of outstanding payments</li>
+                <li>Work-in-progress will be charged on a pro-rata basis</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-sync-alt"></i> 8. Changes to Terms</h2>
+            <p>TrendZmediaSolution reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to our website.</p>
+            <p>We will notify existing clients of significant changes via email. Continued use of our services after changes constitutes your acceptance of the new terms. We encourage you to review these Terms periodically.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-gavel"></i> 9. Governing Law</h2>
+            <p>These Terms shall be governed by and construed in accordance with the laws of India, specifically the state of Maharashtra. Any disputes shall be subject to the exclusive jurisdiction of courts in Mumbai, Maharashtra.</p>
+            <p>We encourage resolution of disputes through good-faith negotiation before pursuing legal remedies. For any queries regarding these Terms, please contact us at legal@trendzmediasolution.com.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-envelope"></i> 10. Contact for Legal Queries</h2>
+            <p>For any questions, concerns, or clarifications regarding these Terms and Conditions, please reach out to us:</p>
+            <ul>
+                <li>Email: legal@trendzmediasolution.com</li>
+                <li>Phone: +91 98765 43210</li>
+                <li>Address: 123 Digital Hub, Tech Park, Mumbai, Maharashtra 400001</li>
+                <li>Response Time: Within 2-3 business days</li>
+            </ul>
+        </div>
+
+        <div class="terms-date">
+            <i class="fas fa-calendar-alt" style="color:var(--primary);margin-right:8px;"></i>
+            These Terms & Conditions were last updated on <strong>January 1, 2024</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== PRIVACY PAGE ===== -->
+<div class="page" id="page-privacy">
+
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a onclick="showPage('home')" style="color:#777;cursor:pointer;">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:0.7rem;color:#555"></i>
+                <span>Privacy Policy</span>
+            </div>
+            <h1>Privacy <span style="color:var(--primary)">Policy</span></h1>
+            <p>Your privacy is important to us. This policy explains how we collect, use, and protect your personal information when you use our services.</p>
+        </div>
+    </div>
+
+    <div class="terms-content">
+
+        <div class="privacy-highlight">
+            <i class="fas fa-shield-alt"></i>
+            <p><strong style="color:#fff;">We take your privacy seriously.</strong> TrendZmediaSolutions is committed to protecting your personal information and being transparent about what data we collect and how we use it. This Privacy Policy was last updated on <strong>January 1, 2024</strong>.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-database"></i> 1. Information We Collect</h2>
+            <p>We collect various types of information to provide and improve our services to you:</p>
+            <ul>
+                <li><strong style="color:#ccc;">Personal Identification:</strong> Name, email address, phone number, company details</li>
+                <li><strong style="color:#ccc;">Contact Information:</strong> Postal address, billing address, communication preferences</li>
+                <li><strong style="color:#ccc;">Technical Data:</strong> IP address, browser type, device information, operating system</li>
+                <li><strong style="color:#ccc;">Usage Data:</strong> Pages visited, time spent, clicks, and interactions on our website</li>
+                <li><strong style="color:#ccc;">Communication Data:</strong> Messages, emails, and inquiries you send us</li>
+                <li><strong style="color:#ccc;">Financial Data:</strong> Payment information processed securely through encrypted payment gateways</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-cogs"></i> 2. How We Use Your Information</h2>
+            <p>The information we collect is used for the following purposes:</p>
+            <ul>
+                <li>To provide, maintain, and improve our services</li>
+                <li>To process transactions and send related information (invoices, receipts)</li>
+                <li>To communicate about your projects, updates, and support</li>
+                <li>To send marketing communications (only with your consent)</li>
+                <li>To analyze website usage and improve user experience</li>
+                <li>To comply with legal obligations and protect our rights</li>
+                <li>To detect and prevent fraud or abuse</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-share-alt"></i> 3. Information Sharing & Disclosure</h2>
+            <p>We value your privacy and do not sell, trade, or rent your personal information to third parties. We may share information with:</p>
+            <ul>
+                <li><strong style="color:#ccc;">Service Providers:</strong> Trusted third parties who assist in operating our business (hosting, payment processing, analytics)</li>
+                <li><strong style="color:#ccc;">Business Partners:</strong> With your consent, for collaborative projects</li>
+                <li><strong style="color:#ccc;">Legal Requirements:</strong> When required by law, court order, or governmental authority</li>
+                <li><strong style="color:#ccc;">Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets</li>
+            </ul>
+            <p>All third parties are required to maintain the confidentiality of your information and use it only for the specified purpose.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-cookie-bite"></i> 4. Cookies & Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to enhance your experience on our website:</p>
+            <ul>
+                <li><strong style="color:#ccc;">Essential Cookies:</strong> Required for the website to function properly</li>
+                <li><strong style="color:#ccc;">Analytics Cookies:</strong> Google Analytics to understand website usage patterns</li>
+                <li><strong style="color:#ccc;">Marketing Cookies:</strong> To deliver relevant advertisements (only with consent)</li>
+                <li><strong style="color:#ccc;">Preference Cookies:</strong> To remember your settings and preferences</li>
+            </ul>
+            <p>You can control cookies through your browser settings. Disabling certain cookies may affect website functionality.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-lock"></i> 5. Data Security</h2>
+            <p>We implement robust security measures to protect your personal information:</p>
+            <ul>
+                <li>SSL/TLS encryption for all data transmission</li>
+                <li>Secure, encrypted databases with restricted access</li>
+                <li>Regular security audits and vulnerability assessments</li>
+                <li>Two-factor authentication for administrative access</li>
+                <li>Employee training on data privacy and security best practices</li>
+                <li>Immediate incident response protocols for any security breaches</li>
+            </ul>
+            <p>While we implement industry-standard security measures, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-user-shield"></i> 6. Your Rights & Choices</h2>
+            <p>You have the following rights regarding your personal information:</p>
+            <ul>
+                <li><strong style="color:#ccc;">Access:</strong> Request a copy of the personal data we hold about you</li>
+                <li><strong style="color:#ccc;">Correction:</strong> Request correction of inaccurate or incomplete data</li>
+                <li><strong style="color:#ccc;">Deletion:</strong> Request deletion of your personal data ("Right to be Forgotten")</li>
+                <li><strong style="color:#ccc;">Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
+                <li><strong style="color:#ccc;">Portability:</strong> Request your data in a portable format</li>
+                <li><strong style="color:#ccc;">Objection:</strong> Object to certain types of data processing</li>
+            </ul>
+            <p>To exercise any of these rights, contact us at privacy@trendzmediasolution.com. We will respond within 30 days.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-child"></i> 7. Children's Privacy</h2>
+            <p>Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from minors. If we become aware that we have inadvertently collected information from a child under 18, we will promptly delete such information.</p>
+            <p>If you believe we have collected information from a minor, please contact us immediately at privacy@trendzmediasolution.com.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-globe-asia"></i> 8. Third-Party Links & Services</h2>
+            <p>Our website may contain links to third-party websites and services. We are not responsible for the privacy practices of these external sites.</p>
+            <ul>
+                <li>We encourage you to review the privacy policies of any third-party sites you visit</li>
+                <li>Our privacy policy applies only to information collected directly by TrendZmediaSolution</li>
+                <li>Third-party services integrated into our platform (analytics, payment gateways) have their own privacy policies</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-calendar"></i> 9. Data Retention</h2>
+            <p>We retain your personal information for as long as necessary to:</p>
+            <ul>
+                <li>Provide our services and fulfill our contractual obligations</li>
+                <li>Comply with legal, accounting, and regulatory requirements</li>
+                <li>Resolve disputes and enforce our agreements</li>
+                <li>Generally, client data is retained for 7 years after project completion for accounting purposes</li>
+                <li>Marketing data is retained until you unsubscribe or request deletion</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h2><i class="fas fa-envelope-open-text"></i> 10. Contact Our Privacy Team</h2>
+            <p>For any privacy-related questions, concerns, or to exercise your rights, please contact our dedicated Privacy Officer:</p>
+            <ul>
+                <li>Privacy Email: privacy@trendzmediasolution.com</li>
+                <li>Data Protection Officer: dpo@trendzmediasolution.com</li>
+                <li>Phone: +91 98765 43210</li>
+                <li>Address: 123 Digital Hub, Tech Park, Mumbai, Maharashtra 400001</li>
+            </ul>
+        </div>
+
+        <div class="terms-date">
+            <i class="fas fa-shield-alt" style="color:var(--primary);margin-right:8px;"></i>
+            Privacy Policy last updated on <strong>January 1, 2024</strong> | Effective from <strong>January 1, 2024</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <span class="logo-text">TrendZ<span>media</span>Solutions</span>
+            <p>TrendZmediaSolutions is your trusted partner for digital growth. We blend creativity with technology to deliver exceptional results that transform businesses and build lasting digital success.</p>
+             
+        </div>
+
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+                <li><a onclick="showPage('home')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Home</a></li>
+                <li><a onclick="showPage('about')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> About Us</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Our Services</a></li>
+                <li><a onclick="showPage('contact')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Contact Us</a></li>
+                <li><a onclick="showPage('terms')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Terms & Policy</a></li>
+                <li><a onclick="showPage('privacy')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Privacy Policy</a></li>
+            </ul>
+        </div> 
+
+        <div class="footer-col">
+            <h4>Our Services</h4>
+            <ul class="footer-links">
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Digital Marketing</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Media Production</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Brand Identity</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Email Marketing</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Bulk Email Setup</a></li>
+                <li><a onclick="showPage('services')"><i class="fas fa-chevron-right" style="font-size:0.65rem;color:var(--primary);"></i> Analytics & Strategy</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Newsletter</h4>
+            <p style="color:#666;font-size:0.83rem;margin-bottom:15px;line-height:1.6;">Subscribe to get the latest digital marketing tips, industry news, and exclusive offers.</p>
+            <div class="footer-newsletter">
+                <input type="email" placeholder="your@email.com">
+                <button onclick="subscribeNewsletter()">
+                    <i class="fas fa-paper-plane"></i> Subscribe Now
+                </button>
+            </div>
+            <p style="color:#444;font-size:0.75rem;margin-top:10px;">We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+    </div>
+
+    <!-- Unsubscribe Modal -->
+<div id="unsubscribeModal" style="
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.85);
+    z-index:99999;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(8px);
+    padding:20px;
+">
+    <div style="
+        background:#111111;
+        border:1px solid #333;
+        border-radius:24px;
+        padding:50px 45px;
+        max-width:480px;
+        width:100%;
+        position:relative;
+        box-shadow:0 30px 80px rgba(0,0,0,0.7);
+        animation: modalSlideIn 0.4s ease;
+    ">
+        <!-- Close Button -->
+        <button onclick="closeUnsubscribeModal()" style="
+            position:absolute;
+            top:18px;right:18px;
+            background:rgba(255,255,255,0.06);
+            border:1px solid #333;
+            color:#888;
+            width:36px;height:36px;
+            border-radius:50%;
+            cursor:pointer;
+            font-size:1rem;
+            display:flex;align-items:center;justify-content:center;
+            transition:all 0.3s;
+        " onmouseover="this.style.color='#fff';this.style.borderColor='#555'"
+           onmouseout="this.style.color='#888';this.style.borderColor='#333'">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Icon -->
+        <div style="
+            width:75px;height:75px;
+            background:rgba(230,57,70,0.12);
+            border:1px solid rgba(230,57,70,0.25);
+            border-radius:20px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.8rem;
+            color:#e63946;
+            margin-bottom:25px;
+        ">
+            <i class="fas fa-bell-slash"></i>
+        </div>
+
+        <!-- Heading -->
+        <h2 style="
+            font-size:1.6rem;
+            font-weight:800;
+            margin-bottom:10px;
+            color:#fff;
+            line-height:1.2;
+        ">Unsubscribe from<br><span style="color:#e63946;">Newsletter</span></h2>
+
+        <p style="
+            color:#888;
+            font-size:0.88rem;
+            line-height:1.7;
+            margin-bottom:30px;
+        ">We're sorry to see you go! Enter your email address below and we'll remove you from our mailing list immediately.</p>
+
+        <!-- Unsubscribe Form -->
+        <form id="unsubscribeForm" onsubmit="submitUnsubscribe(event)">
+
+            <div style="margin-bottom:18px;">
+                <label style="
+                    display:block;
+                    font-size:0.8rem;
+                    font-weight:500;
+                    color:#bbb;
+                    margin-bottom:8px;
+                    letter-spacing:0.3px;
+                ">Your Email Address *</label>
+                <input
+                    id="unsubEmailInput"
+                    type="email"
+                    placeholder="enter your subscribed email"
+                    required
+                    style="
+                        width:100%;
+                        background:rgba(255,255,255,0.04);
+                        border:1px solid #2a2a2a;
+                        border-radius:10px;
+                        padding:13px 16px;
+                        color:#fff;
+                        font-size:0.88rem;
+                        font-family:'Poppins',sans-serif;
+                        outline:none;
+                        transition:all 0.3s;
+                    "
+                    onfocus="this.style.borderColor='#e63946';this.style.boxShadow='0 0 0 3px rgba(230,57,70,0.1)'"
+                    onblur="this.style.borderColor='#2a2a2a';this.style.boxShadow='none'"
+                >
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <label style="
+                    display:block;
+                    font-size:0.8rem;
+                    font-weight:500;
+                    color:#bbb;
+                    margin-bottom:8px;
+                ">Reason for Unsubscribing (Optional)</label>
+                <select id="unsubReason" style="
+                    width:100%;
+                    background:#1a1a1a;
+                    border:1px solid #2a2a2a;
+                    border-radius:10px;
+                    padding:13px 16px;
+                    color:#aaa;
+                    font-size:0.85rem;
+                    font-family:'Poppins',sans-serif;
+                    outline:none;
+                    cursor:pointer;
+                    transition:all 0.3s;
+                "
+                onfocus="this.style.borderColor='#e63946'"
+                onblur="this.style.borderColor='#2a2a2a'">
+                    <option value="" disabled selected>Select a reason...</option>
+                    <option value="too_many">Too many emails</option>
+                    <option value="not_relevant">Content not relevant to me</option>
+                    <option value="never_subscribed">I never subscribed</option>
+                    <option value="not_interested">No longer interested</option>
+                    <option value="other">Other reason</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display:flex;gap:12px;">
+                <button type="button" onclick="closeUnsubscribeModal()" style="
+                    flex:1;
+                    background:rgba(255,255,255,0.05);
+                    color:#aaa;
+                    border:1px solid #2a2a2a;
+                    border-radius:10px;
+                    padding:13px;
+                    font-size:0.85rem;
+                    font-weight:600;
+                    cursor:pointer;
+                    font-family:'Poppins',sans-serif;
+                    transition:all 0.3s;
+                "
+                onmouseover="this.style.background='rgba(255,255,255,0.09)';this.style.color='#fff'"
+                onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#aaa'">
+                    Cancel
+                </button>
+                <button type="submit" id="unsubBtn" style="
+                    flex:2;
+                    background:linear-gradient(135deg,#e63946,#c1121f);
+                    color:#fff;
+                    border:none;
+                    border-radius:10px;
+                    padding:13px;
+                    font-size:0.85rem;
+                    font-weight:600;
+                    cursor:pointer;
+                    font-family:'Poppins',sans-serif;
+                    transition:all 0.3s;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
+                "
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(230,57,70,0.4)'"
+                onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <i class="fas fa-bell-slash"></i> Unsubscribe Me
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Success State (hidden by default) -->
+        <div id="unsubSuccessState" style="display:none;text-align:center;padding:20px 0;">
+            <div style="
+                width:80px;height:80px;
+                background:rgba(40,167,69,0.15);
+                border:1px solid rgba(40,167,69,0.3);
+                border-radius:50%;
+                display:flex;align-items:center;justify-content:center;
+                font-size:2rem;color:#28a745;
+                margin:0 auto 20px;
+            ">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;color:#fff;">
+                Successfully Unsubscribed!
+            </h3>
+            <p style="color:#888;font-size:0.85rem;line-height:1.6;margin-bottom:25px;">
+                You've been removed from our newsletter list. <br>
+                We're sorry to see you go. You can always resubscribe anytime.
+            </p>
+            <button onclick="closeUnsubscribeModal()" style="
+                background:linear-gradient(135deg,#28a745,#1e7e34);
+                color:#fff;
+                border:none;
+                border-radius:10px;
+                padding:12px 30px;
+                font-size:0.85rem;
+                font-weight:600;
+                cursor:pointer;
+                font-family:'Poppins',sans-serif;
+            ">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+
+        <!-- Error Message -->
+        <div id="unsubErrorMsg" style="
+            display:none;
+            background:rgba(220,53,69,0.12);
+            border:1px solid rgba(220,53,69,0.3);
+            color:#dc3545;
+            padding:12px 16px;
+            border-radius:10px;
+            font-size:0.82rem;
+            margin-top:15px;
+            text-align:center;
+        "></div>
+    </div>
+</div>
+
+<!-- ============ FOOTER BOTTOM (UPDATED) ============ -->
+<div class="footer-bottom">
+    <p>© 2024 TrendZmediaSolution. All rights reserved.</p>
+    <div class="footer-bottom-links">
+        <a onclick="showPage('terms')">Terms & Policy</a>
+        <a onclick="showPage('privacy')">Privacy Policy</a>
+        <a onclick="showPage('contact')">Contact</a>
+        <!-- ✅ UNSUBSCRIBE LINK ADDED HERE -->
+        <a onclick="openUnsubscribeModal()" style="color:#e63946 !important;">
+            <i class="fas fa-bell-slash" style="margin-right:4px;font-size:0.75rem;"></i>Unsubscribe
+        </a>
+    </div>
+</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // ===== PAGE NAVIGATION =====
+    function showPage(pageName) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+        // Show selected page
+        const targetPage = document.getElementById('page-' + pageName);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+
+        // Update nav links
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const activeNavLink = document.getElementById('nav-' + pageName);
+        if (activeNavLink) activeNavLink.classList.add('active');
+
+        // Update mobile nav
+        document.querySelectorAll('.mobile-menu a').forEach(a => a.classList.remove('active'));
+        const activeMobileLink = document.getElementById('mnav-' + pageName);
+        if (activeMobileLink) activeMobileLink.classList.add('active');
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Loading bar animation
+        animateLoader();
+    }
+
+    function animateLoader() {
+        const bar = document.getElementById('loaderBar');
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = '70%'; }, 50);
+        setTimeout(() => { bar.style.width = '100%'; }, 400);
+        setTimeout(() => { bar.style.width = '0%'; bar.style.transition = 'none'; }, 700);
+        setTimeout(() => { bar.style.transition = 'width 0.5s ease'; }, 750);
+    }
+
+    // ===== MOBILE MENU =====
+    function toggleMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        menu.classList.toggle('open');
+        hamburger.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        document.getElementById('mobileMenu').classList.remove('open');
+        document.getElementById('hamburger').classList.remove('active');
+    }
+
+    // ===== READ MORE TOGGLE =====
+    function toggleReadMore(btn) {
+        const expandedContent = btn.previousElementSibling;
+        const isExpanded = expandedContent.classList.contains('show');
+
+        expandedContent.classList.toggle('show');
+        btn.innerHTML = isExpanded
+            ? 'Read More <i class="fas fa-arrow-right"></i>'
+            : 'Read Less <i class="fas fa-arrow-up"></i>';
+    }
+
+    function toggleAboutStory(btn) {
+        const fullStory = document.getElementById('about-full-story');
+        const isExpanded = fullStory.classList.contains('show');
+
+        fullStory.classList.toggle('show');
+        btn.innerHTML = isExpanded
+            ? 'Read More <i class="fas fa-arrow-right"></i>'
+            : 'Read Less <i class="fas fa-arrow-up"></i>';
+    }
+
+// ===== CONTACT FORM - REAL EMAIL DELIVERY =====
+function submitForm(e) {
+    e.preventDefault();
+
+    const btn = document.querySelector('.form-submit');
+    const successMsg = document.getElementById('successMsg');
+    const form = document.getElementById('contactForm');
+
+    // Get all form values
+    const firstName = form.querySelector('input[placeholder="Your first name"]').value.trim();
+    const lastName = form.querySelector('input[placeholder="Your last name"]').value.trim();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const phone = form.querySelector('input[type="tel"]').value.trim();
+    const company = form.querySelector('input[placeholder="Your company name"]').value.trim();
+    const service = form.querySelectorAll('select')[0].value;
+    const budget = form.querySelectorAll('select')[1].value;
+    const message = form.querySelector('textarea').value.trim();
+
+    // Show loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.8';
+
+    // EmailJS Template Parameters - these match your email template variables
+    const templateParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // 🔴 Your Gmail (already set)
+        from_name: firstName + ' ' + lastName,
+        from_email: email,
+        phone: phone || 'Not provided',
+        company: company || 'Not provided',
+        service: service || 'Not specified',
+        budget: budget || 'Not specified',
+        message: message,
+        reply_to: email,
+    };
+
+    // Send email via EmailJS
+    emailjs.send(
+        'service_5adosyh',    // 🔴 Replace with your EmailJS Service ID  (e.g. 'service_abc123')
+        'template_huctlge',   // 🔴 Replace with your EmailJS Template ID (e.g. 'template_xyz789')
+        templateParams
+    )
+    .then(function(response) {
+        console.log('Email sent successfully!', response.status, response.text);
+
+        // Success UI
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent Successfully!';
+        btn.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
+        btn.style.opacity = '1';
+        successMsg.style.display = 'block';
+        successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Your message has been sent to TrendZmediaSolution! We will get back to you within 24 hours at <strong>' + email + '</strong>';
+
+        // Reset after 6 seconds
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            form.reset();
+            successMsg.style.display = 'none';
+        }, 6000);
+    })
+    .catch(function(error) {
+        console.error('Email sending failed:', error);
+
+        // Error UI
+        btn.innerHTML = '<i class="fas fa-times"></i> Failed to Send. Try Again.';
+        btn.style.background = 'linear-gradient(135deg, #dc3545, #a71d2a)';
+        btn.style.opacity = '1';
+        btn.disabled = false;
+        successMsg.style.display = 'block';
+        successMsg.style.background = 'rgba(220, 53, 69, 0.15)';
+        successMsg.style.borderColor = 'rgba(220, 53, 69, 0.3)';
+        successMsg.style.color = '#dc3545';
+        successMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong! Please email us directly at <strong>kuldeepguptalhn@gmail.com</strong>';
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            successMsg.style.display = 'none';
+            successMsg.style.background = '';
+            successMsg.style.borderColor = '';
+            successMsg.style.color = '';
+        }, 7000);
+    });
+}
+
+   // ===== NEWSLETTER - REAL EMAIL DELIVERY =====
+function subscribeNewsletter() {
+    const btn = event.currentTarget;
+    const inputField = btn.previousElementSibling;
+    const emailValue = inputField.value.trim();
+
+    // Validate email
+    if (!emailValue || !emailValue.includes('@') || !emailValue.includes('.')) {
+        inputField.style.borderColor = '#dc3545';
+        inputField.style.boxShadow = '0 0 0 3px rgba(220,53,69,0.2)';
+        inputField.placeholder = 'Please enter a valid email!';
+        setTimeout(() => {
+            inputField.style.borderColor = '';
+            inputField.style.boxShadow = '';
+            inputField.placeholder = 'your@email.com';
+        }, 3000);
+        return;
+    }
+
+    // Loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+    btn.disabled = true;
+
+    // Newsletter Email Parameters
+    const newsletterParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // 🔴 Your Gmail (already set)
+        subscriber_email: emailValue,
+        from_name: 'Newsletter Subscription',
+        message: 'New newsletter subscription from: ' + emailValue,
+        subject: '📧 New Newsletter Subscriber - TrendZmediaSolutions',
+    };
+
+    // Send via EmailJS
+    emailjs.send(
+        'service_5adosyh',       // 🔴 Same Service ID as above
+        'template_bcdf5yo', // 🔴 Can use same template or create new one for newsletter
+        newsletterParams
+    )
+    .then(function(response) {
+        console.log('Newsletter subscription sent!', response);
+        btn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
+        btn.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
+        inputField.value = '';
+        inputField.placeholder = 'Thank you for subscribing! ✓';
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe Now';
+            btn.style.background = '';
+            btn.disabled = false;
+            inputField.placeholder = 'your@email.com';
+        }, 4000);
+    })
+    .catch(function(error) {
+        console.error('Newsletter failed:', error);
+        btn.innerHTML = '<i class="fas fa-times"></i> Try Again';
+        btn.style.background = 'linear-gradient(135deg, #dc3545, #a71d2a)';
+        btn.disabled = false;
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe Now';
+            btn.style.background = '';
+        }, 3000);
+    });
+}
+// ===== UNSUBSCRIBE MODAL FUNCTIONS =====
+function openUnsubscribeModal() {
+    const modal = document.getElementById('unsubscribeModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // Reset modal to form state every time it opens
+    document.getElementById('unsubscribeForm').style.display = 'block';
+    document.getElementById('unsubSuccessState').style.display = 'none';
+    document.getElementById('unsubErrorMsg').style.display = 'none';
+    document.getElementById('unsubEmailInput').value = '';
+    document.getElementById('unsubReason').selectedIndex = 0;
+    const btn = document.getElementById('unsubBtn');
+    btn.innerHTML = '<i class="fas fa-bell-slash"></i> Unsubscribe Me';
+    btn.style.background = 'linear-gradient(135deg,#e63946,#c1121f)';
+    btn.disabled = false;
+}
+
+function closeUnsubscribeModal() {
+    const modal = document.getElementById('unsubscribeModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside the box
+document.getElementById('unsubscribeModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeUnsubscribeModal();
+    }
+});
+
+// Close modal with ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeUnsubscribeModal();
+    }
+});
+
+function submitUnsubscribe(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('unsubEmailInput').value.trim();
+    const reason = document.getElementById('unsubReason').value || 'Not specified';
+    const btn = document.getElementById('unsubBtn');
+    const errorMsg = document.getElementById('unsubErrorMsg');
+
+    // Loading state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.disabled = true;
+    errorMsg.style.display = 'none';
+
+    // EmailJS - Send unsubscribe notification to your Gmail
+    const unsubParams = {
+        to_email: 'kuldeepguptalhn@gmail.com',   // ✅ Your Gmail already set
+        from_name: 'Unsubscribe Request',
+        subscriber_email: email,
+        reason: reason,
+        subject: '🔕 Unsubscribe Request - TrendZmediaSolution',
+        message: 'User ' + email + ' has requested to unsubscribe. Reason: ' + reason,
+    };
+
+    emailjs.send(
+        'service_5adosyh',         // 🔴 Same Service ID
+        'template_huctlge',        // 🔴 Same Template ID
+        unsubParams
+    )
+    .then(function(response) {
+        console.log('Unsubscribe email sent!', response);
+        // Show success state
+        document.getElementById('unsubscribeForm').style.display = 'none';
+        document.getElementById('unsubSuccessState').style.display = 'block';
+    })
+    .catch(function(error) {
+        console.error('Unsubscribe failed:', error);
+        btn.innerHTML = '<i class="fas fa-bell-slash"></i> Unsubscribe Me';
+        btn.disabled = false;
+        errorMsg.style.display = 'block';
+        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong. Please email us directly at <strong>kuldeepguptalhn@gmail.com</strong>';
+    });
+}
+
+    // ===== NAVBAR SCROLL =====
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        const scrollTop = document.getElementById('scrollTop');
+
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        if (window.scrollY > 300) {
+            scrollTop.classList.add('visible');
+        } else {
+            scrollTop.classList.remove('visible');
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== COUNTER ANIMATION =====
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-card h2, .stat-item h3');
+        counters.forEach(counter => {
+            const target = counter.innerText;
+            const number = parseInt(target.replace(/[^0-9]/g, ''));
+            const suffix = target.replace(/[0-9]/g, '');
+            let current = 0;
+            const increment = number / 60;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= number) {
+                    current = number;
+                    clearInterval(timer);
+                }
+                counter.innerText = Math.floor(current) + suffix;
+            }, 30);
+        });
+    }
+
+    // ===== INIT =====
+    window.addEventListener('load', () => {
+        animateLoader();
+        setTimeout(() => {
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 300);
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        if (!menu.contains(e.target) && !hamburger.contains(e.target) && menu.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+</script>
+
+</body>
+</html>
